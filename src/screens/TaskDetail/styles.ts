@@ -20,6 +20,8 @@ export const styles = StyleSheet.create({
   headerBtn: {
     minWidth: 44,
     minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     padding: Spacing.xs,
   },
@@ -122,9 +124,10 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.successLight,
     borderColor: Colors.successBorder,
   },
-  timeStatusIcon: {
-    fontSize: 24,
+  timeStatusIconWrapper: {
     marginRight: Spacing.md,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   timeStatusTextContainer: {
     flex: 1,
@@ -199,6 +202,7 @@ export const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   toggleBtn: {
+    flexDirection: 'row',
     backgroundColor: Colors.primary,
     borderRadius: Radius.lg,
     paddingVertical: Spacing.md + 2,
@@ -225,6 +229,7 @@ export const styles = StyleSheet.create({
     color: Colors.textSecondary,
   },
   deleteBtn: {
+    flexDirection: 'row',
     backgroundColor: Colors.white,
     borderRadius: Radius.lg,
     borderWidth: 1.5,

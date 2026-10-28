@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { ClipboardList, Plus, RotateCcw, SearchX } from 'lucide-react-native';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../theme';
 
 interface EmptyStateProps {
@@ -13,7 +14,11 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(
     return (
       <View style={styles.container}>
         <View style={styles.iconCircle}>
-          <Text style={styles.icon}>{isFiltered ? '🔍' : '📝'}</Text>
+          {isFiltered ? (
+            <SearchX size={36} color={Colors.primary} strokeWidth={1.8} />
+          ) : (
+            <ClipboardList size={36} color={Colors.primary} strokeWidth={1.8} />
+          )}
         </View>
 
         <Text style={styles.title}>
@@ -31,6 +36,7 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(
             onPress={onClearFilter}
             style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
           >
+            <RotateCcw size={16} color={Colors.white} strokeWidth={2.2} style={{ marginRight: 6 }} />
             <Text style={styles.actionBtnText}>Xoá bộ lọc & tìm kiếm</Text>
           </Pressable>
         ) : onAddTask ? (
@@ -38,7 +44,8 @@ export const EmptyState: React.FC<EmptyStateProps> = React.memo(
             onPress={onAddTask}
             style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
           >
-            <Text style={styles.actionBtnText}>+ Thêm công việc đầu tiên</Text>
+            <Plus size={18} color={Colors.white} strokeWidth={2.5} style={{ marginRight: 6 }} />
+            <Text style={styles.actionBtnText}>Thêm công việc đầu tiên</Text>
           </Pressable>
         ) : null}
       </View>
@@ -81,6 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.lg,
   },
   actionBtn: {
+    flexDirection: 'row',
     backgroundColor: Colors.primary,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,

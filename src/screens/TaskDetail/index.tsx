@@ -8,6 +8,17 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  AlertTriangle,
+  Calendar,
+  Check,
+  CheckCircle2,
+  ChevronLeft,
+  Clock,
+  Pencil,
+  RotateCcw,
+  Trash2,
+} from 'lucide-react-native';
 import { useTasks } from '../../context/TaskContext';
 import { TaskDetailScreenProps } from '../../types/navigation';
 import { Colors } from '../../theme';
@@ -27,7 +38,8 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
       <View style={styles.container}>
         <View style={[styles.header, { paddingTop: Math.max(insets.top, 16) }]}>
           <Pressable onPress={() => navigation.goBack()} style={styles.headerBtn}>
-            <Text style={styles.headerBackText}>← Quay lại</Text>
+            <ChevronLeft size={22} color={Colors.primary} strokeWidth={2.4} />
+            <Text style={styles.headerBackText}>Quay lại</Text>
           </Pressable>
         </View>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -82,7 +94,8 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
           hitSlop={10}
           style={styles.headerBtn}
         >
-          <Text style={styles.headerBackText}>← Quay lại</Text>
+          <ChevronLeft size={22} color={Colors.primary} strokeWidth={2.4} />
+          <Text style={styles.headerBackText}>Quay lại</Text>
         </Pressable>
         <Text style={styles.headerTitle}>Chi tiết công việc</Text>
         <Pressable
@@ -90,7 +103,8 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
           hitSlop={10}
           style={styles.headerBtn}
         >
-          <Text style={styles.headerEditText}>✏️ Sửa</Text>
+          <Pencil size={15} color={Colors.primary} strokeWidth={2.2} style={{ marginRight: 4 }} />
+          <Text style={styles.headerEditText}>Sửa</Text>
         </Pressable>
       </View>
 
@@ -143,15 +157,17 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
               dateDetail.status === 'completed' && styles.timeStatusBannerCompleted,
             ]}
           >
-            <Text style={styles.timeStatusIcon}>
-              {dateDetail.status === 'completed'
-                ? '✅'
-                : dateDetail.status === 'overdue'
-                ? '🚨'
-                : dateDetail.status === 'today'
-                ? '⏰'
-                : '📅'}
-            </Text>
+            <View style={styles.timeStatusIconWrapper}>
+              {dateDetail.status === 'completed' ? (
+                <CheckCircle2 size={24} color={Colors.successDark} strokeWidth={2.2} />
+              ) : dateDetail.status === 'overdue' ? (
+                <AlertTriangle size={24} color={Colors.dangerDark} strokeWidth={2.2} />
+              ) : dateDetail.status === 'today' ? (
+                <Clock size={24} color={Colors.warningDark} strokeWidth={2.2} />
+              ) : (
+                <Calendar size={24} color={Colors.primaryDark} strokeWidth={2.2} />
+              )}
+            </View>
             <View style={styles.timeStatusTextContainer}>
               <Text
                 style={[
@@ -184,14 +200,21 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
           <View style={styles.metaGrid}>
             <View style={styles.metaRow}>
               <Text style={styles.metaLabel}>Trạng thái hiện tại:</Text>
-              <Text
-                style={[
-                  styles.metaValue,
-                  { color: task.done ? Colors.successDark : Colors.textPrimary },
-                ]}
-              >
-                {task.done ? '✓ Đã hoàn thành' : '⏳ Chưa hoàn thành'}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {task.done ? (
+                  <CheckCircle2 size={15} color={Colors.successDark} strokeWidth={2.2} style={{ marginRight: 4 }} />
+                ) : (
+                  <Clock size={15} color={Colors.textSecondary} strokeWidth={2.2} style={{ marginRight: 4 }} />
+                )}
+                <Text
+                  style={[
+                    styles.metaValue,
+                    { color: task.done ? Colors.successDark : Colors.textPrimary },
+                  ]}
+                >
+                  {task.done ? 'Đã hoàn thành' : 'Chưa hoàn thành'}
+                </Text>
+              </View>
             </View>
             <View style={styles.metaRow}>
               <Text style={styles.metaLabel}>Mã công việc:</Text>
@@ -211,8 +234,13 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
               pressed && styles.toggleBtnPressed,
             ]}
           >
+            {task.done ? (
+              <RotateCcw size={18} color={Colors.textSecondary} strokeWidth={2.2} style={{ marginRight: 8 }} />
+            ) : (
+              <Check size={18} color={Colors.white} strokeWidth={2.6} style={{ marginRight: 8 }} />
+            )}
             <Text style={[styles.toggleBtnText, task.done && styles.toggleBtnTextDone]}>
-              {task.done ? '↩ Đánh dấu chưa hoàn thành' : '✓ Đánh dấu đã hoàn thành'}
+              {task.done ? 'Đánh dấu chưa hoàn thành' : 'Đánh dấu đã hoàn thành'}
             </Text>
           </Pressable>
 
@@ -221,7 +249,8 @@ const TaskDetailScreen: React.FC<TaskDetailScreenProps> = ({ route, navigation }
             onPress={handleDelete}
             style={({ pressed }) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
           >
-            <Text style={styles.deleteBtnText}>🗑 Xoá công việc này</Text>
+            <Trash2 size={16} color={Colors.dangerDark} strokeWidth={2} style={{ marginRight: 6 }} />
+            <Text style={styles.deleteBtnText}>Xoá công việc này</Text>
           </Pressable>
         </View>
       </ScrollView>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ArrowUpDown, Search, X } from 'lucide-react-native';
 import { SortOption } from '../types/task';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../theme';
 
@@ -16,7 +17,7 @@ export const SearchAndSortBar: React.FC<SearchAndSortBarProps> = React.memo(
       <View style={styles.container}>
         {/* Ô tìm kiếm theo tên công việc */}
         <View style={styles.searchWrapper}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <Search size={16} color={Colors.textMuted} strokeWidth={2} style={styles.searchIcon} />
           <TextInput
             style={styles.input}
             placeholder="Tìm kiếm công việc..."
@@ -32,7 +33,7 @@ export const SearchAndSortBar: React.FC<SearchAndSortBarProps> = React.memo(
               hitSlop={8}
               style={styles.clearBtn}
             >
-              <Text style={styles.clearText}>✕</Text>
+              <X size={15} color={Colors.textMuted} strokeWidth={2.2} />
             </Pressable>
           ) : null}
         </View>
@@ -45,7 +46,7 @@ export const SearchAndSortBar: React.FC<SearchAndSortBarProps> = React.memo(
             pressed && styles.sortBtnPressed,
           ]}
         >
-          <Text style={styles.sortIcon}>⇅</Text>
+          <ArrowUpDown size={14} color={Colors.primary} strokeWidth={2.2} style={styles.sortIcon} />
           <Text style={styles.sortLabel}>
             {sortBy === 'DUE_DATE' ? 'Hạn chót' : 'Ưu tiên'}
           </Text>
@@ -75,9 +76,7 @@ const styles = StyleSheet.create({
     height: 44,
   },
   searchIcon: {
-    fontSize: 14,
-    marginRight: 6,
-    color: Colors.textMuted,
+    marginRight: 8,
   },
   input: {
     flex: 1,
@@ -107,10 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surfaceSubtle,
   },
   sortIcon: {
-    fontSize: 16,
-    color: Colors.primary,
-    marginRight: 4,
-    fontWeight: FontWeight.bold,
+    marginRight: 6,
   },
   sortLabel: {
     fontSize: FontSize.xs + 1,

@@ -11,6 +11,16 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  AlertCircle,
+  BookOpen,
+  Briefcase,
+  Calendar,
+  Check,
+  ChevronLeft,
+  HeartPulse,
+  User,
+} from 'lucide-react-native';
 import { useTasks } from '../../context/TaskContext';
 import { Category, Priority } from '../../types/task';
 import { TaskFormScreenProps } from '../../types/navigation';
@@ -20,6 +30,20 @@ import { styles } from './styles';
 
 const CATEGORIES: Category[] = ['Học tập', 'Công việc', 'Sức khoẻ', 'Cá nhân'];
 const PRIORITIES: Priority[] = ['Cao', 'Trung bình', 'Thấp'];
+
+const renderCategoryIcon = (cat: Category, color: string) => {
+  switch (cat) {
+    case 'Học tập':
+      return <BookOpen size={13} color={color} strokeWidth={2.2} style={{ marginRight: 5 }} />;
+    case 'Công việc':
+      return <Briefcase size={13} color={color} strokeWidth={2.2} style={{ marginRight: 5 }} />;
+    case 'Sức khoẻ':
+      return <HeartPulse size={13} color={color} strokeWidth={2.2} style={{ marginRight: 5 }} />;
+    case 'Cá nhân':
+    default:
+      return <User size={13} color={color} strokeWidth={2.2} style={{ marginRight: 5 }} />;
+  }
+};
 
 const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
@@ -144,7 +168,8 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
           hitSlop={10}
           style={styles.backButton}
         >
-          <Text style={styles.backText}>← Huỷ</Text>
+          <ChevronLeft size={22} color={Colors.primary} strokeWidth={2.4} />
+          <Text style={styles.backText}>Huỷ</Text>
         </Pressable>
         <Text style={styles.headerTitle}>
           {isEditMode ? 'Sửa công việc' : 'Thêm công việc'}
@@ -190,7 +215,10 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
 
             {/* Thông báo lỗi hiển thị ngay dưới ô nhập (Câu 2) */}
             {titleError ? (
-              <Text style={styles.errorText}>⚠️ {titleError}</Text>
+              <View style={styles.errorRow}>
+                <AlertCircle size={14} color={Colors.dangerDark} strokeWidth={2.2} style={{ marginRight: 4 }} />
+                <Text style={styles.errorText}>{titleError}</Text>
+              </View>
             ) : null}
           </View>
 
@@ -204,6 +232,7 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
               {CATEGORIES.map((cat) => {
                 const isSelected = category === cat;
                 const catTheme = Colors.categories[cat];
+                const activeColor = isSelected ? catTheme.text : Colors.textMuted;
 
                 return (
                   <Pressable
@@ -218,9 +247,7 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
                       },
                     ]}
                   >
-                    <View
-                      style={[styles.chipDot, { backgroundColor: catTheme.text }]}
-                    />
+                    {renderCategoryIcon(cat, activeColor)}
                     <Text
                       style={[
                         styles.chipText,
@@ -299,7 +326,10 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
 
             {/* Thông báo lỗi hiển thị ngay dưới ô nhập (Câu 2) */}
             {dueDateError ? (
-              <Text style={styles.errorText}>⚠️ {dueDateError}</Text>
+              <View style={styles.errorRow}>
+                <AlertCircle size={14} color={Colors.dangerDark} strokeWidth={2.2} style={{ marginRight: 4 }} />
+                <Text style={styles.errorText}>{dueDateError}</Text>
+              </View>
             ) : (
               <Text style={styles.hintText}>
                 Định dạng ngày/tháng/năm 4 chữ số (ví dụ: 30/10/2026)
@@ -332,6 +362,7 @@ const TaskFormScreen: React.FC<TaskFormScreenProps> = ({ route, navigation }) =>
               pressed && styles.submitBtnPressed,
             ]}
           >
+            <Check size={18} color={Colors.white} strokeWidth={2.6} style={{ marginRight: 8 }} />
             <Text style={styles.submitBtnText}>
               {isEditMode ? 'Lưu thay đổi' : 'Tạo công việc'}
             </Text>

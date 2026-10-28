@@ -24,6 +24,8 @@ export const styles = StyleSheet.create({
     padding: Spacing.xs,
     minWidth: 44,
     minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   backText: {
@@ -85,10 +87,14 @@ export const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingTop: Spacing.md,
   },
+  errorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+  },
   errorText: {
     fontSize: FontSize.xs + 1,
     color: Colors.dangerDark,
-    marginTop: 6,
     fontWeight: FontWeight.bold,
   },
   hintText: {
@@ -132,6 +138,7 @@ export const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   submitBtn: {
+    flexDirection: 'row',
     backgroundColor: Colors.primary,
     borderRadius: Radius.lg,
     paddingVertical: Spacing.lg,

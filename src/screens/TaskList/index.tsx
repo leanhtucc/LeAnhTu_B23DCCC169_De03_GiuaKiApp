@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CheckSquare, Plus, Trash2 } from 'lucide-react-native';
 import { useTasks } from '../../context/TaskContext';
 import { FilterStatus, SortOption, Task } from '../../types/task';
 import { TaskListScreenProps } from '../../types/navigation';
@@ -17,6 +18,7 @@ import { SearchAndSortBar } from '../../components/SearchAndSortBar';
 import { TaskCard } from '../../components/TaskCard';
 import { EmptyState } from '../../components/EmptyState';
 import { compareDates, isTaskOverdue } from '../../utils/date';
+import { Colors } from '../../theme';
 import { styles } from './styles';
 
 const PRIORITY_WEIGHT = {
@@ -167,7 +169,7 @@ const TaskListScreen: React.FC<TaskListScreenProps> = ({ navigation }) => {
       <View style={[styles.header, { paddingTop: Math.max(insets.top, 16) }]}>
         <View style={styles.headerLeft}>
           <View style={styles.headerBrandRow}>
-            <Text style={styles.headerLogo}>📋</Text>
+            <CheckSquare size={24} color={Colors.primary} strokeWidth={2.3} />
             <Text style={styles.headerTitle}>PlannerApp</Text>
           </View>
           <Text style={styles.headerSubtitle}>Kế hoạch & Công việc cá nhân</Text>
@@ -183,7 +185,12 @@ const TaskListScreen: React.FC<TaskListScreenProps> = ({ navigation }) => {
             pressed && counts.completed > 0 && { opacity: 0.75 },
           ]}
         >
-          <Text style={styles.clearCompletedIcon}>🗑</Text>
+          <Trash2
+            size={14}
+            color={counts.completed === 0 ? Colors.textDisabled : Colors.dangerDark}
+            strokeWidth={2}
+            style={{ marginRight: 4 }}
+          />
           <Text
             style={[
               styles.clearCompletedText,
@@ -241,7 +248,7 @@ const TaskListScreen: React.FC<TaskListScreenProps> = ({ navigation }) => {
           pressed && styles.fabPressed,
         ]}
       >
-        <Text style={styles.fabIcon}>+</Text>
+        <Plus size={20} color={Colors.white} strokeWidth={2.6} style={{ marginRight: 6 }} />
         <Text style={styles.fabText}>Thêm việc</Text>
       </Pressable>
     </View>

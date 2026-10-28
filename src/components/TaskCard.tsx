@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { AlertCircle, Calendar, Check } from 'lucide-react-native';
 import { Task } from '../types/task';
 import { Colors, FontSize, FontWeight, Radius, Shadow, Spacing } from '../theme';
 import { isTaskOverdue } from '../utils/date';
@@ -55,7 +56,7 @@ export const TaskCard: React.FC<TaskCardProps> = React.memo(
               pressed && styles.checkboxPressed,
             ]}
           >
-            {task.done ? <Text style={styles.checkmark}>✓</Text> : null}
+            {task.done ? <Check size={14} color={Colors.white} strokeWidth={3} /> : null}
           </Pressable>
 
           {/* Phần nội dung công việc */}
@@ -90,6 +91,7 @@ export const TaskCard: React.FC<TaskCardProps> = React.memo(
               {/* Nhãn Quá hạn màu đỏ ở danh sách (Câu 4) */}
               {overdue ? (
                 <View style={styles.overdueBadge}>
+                  <AlertCircle size={11} color={Colors.dangerDark} strokeWidth={2.5} style={{ marginRight: 3 }} />
                   <Text style={styles.overdueText}>Quá hạn</Text>
                 </View>
               ) : null}
@@ -118,6 +120,12 @@ export const TaskCard: React.FC<TaskCardProps> = React.memo(
 
             {/* Hạn hoàn thành */}
             <View style={styles.footerRow}>
+              <Calendar
+                size={12}
+                color={overdue ? Colors.dangerDark : Colors.textMuted}
+                strokeWidth={2}
+                style={{ marginRight: 4 }}
+              />
               <Text style={styles.dateLabel}>Hạn chót:</Text>
               <Text style={[styles.dateValue, overdue && styles.dateValueOverdue]}>
                 {task.dueDate}
@@ -219,6 +227,8 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
   overdueBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: Colors.dangerLight,
     borderColor: Colors.dangerBorder,
     borderWidth: 1,
